@@ -2,9 +2,19 @@
 require_once "conexao.php";
 
 class pessoa{
-    private $id_pessoa
+    private $id_pessoa;
     private $nome;
 
+    public function __construct($id = false)
+    {
+        if($id){
+            $this->id_pessoa = $id;
+            $this->carregar();
+        }
+    }
+
+
+  
     public function getNome(){
         return $this->nome;
     }
@@ -15,6 +25,17 @@ class pessoa{
 
     public function getId(){
         return $this->id_pessoa;
+    }
+
+    public function carregar(){
+        $conexao = Conexao::conectar();
+        $sql = " SELECT * FROM pessoa WHERE id_pessoa = :id";
+        $stmt = $conexao->prepare($sql);
+        $stmt->bindValue(":id", $this->getId());
+        $stmt->execute();
+        $resultado = $stmt->fetch();
+
+        $this->setNome($resultado["nome"]);
     }
 
     public function  criar (){
@@ -44,5 +65,17 @@ class pessoa{
         } catch (PDOException $e) {
             echo $e->getMessage();
         }   
+    }
+
+    public function deletar(){
+        try {
+            $conexao = Conexao::conectar();
+            $sql = "DELETE FROM pessoa WHERE id_pessoa = id";
+            $stmt = $conexao->prepare($sql);
+            $stmt->bindValue(":id" , $this->getId());
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+        }
     }
 }
