@@ -18,10 +18,15 @@
 
     <section class="d-flex justify-content-center">
         <section class="m-3 w-50 d-flex justify-content-center" >
-            <form action="pessoa_add_controller.php" method="post">
+            <form action="/crud_yt-main/controllers/pessoa_add_controller.php" method="post" enctype="multipart/form-data" >
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome</label>
-                    <input type="email" class="form-control" id="nome" name="nome" >
+                    <input type="text" class="form-control" id="nome" name="nome" >
+                </div>
+
+                <div class="mb-3">
+                    <label for="foto" class="form-label">Foto</label>
+                    <input type="file" class="form-control" id="foto" name="foto" >
                 </div>
 
                 <div class="mb-3">
